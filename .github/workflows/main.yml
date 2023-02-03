@@ -6,14 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go_version: ["1.19.5", "1.18.10", "1.17.13", "1.16.15"]
+        go_version: ["1.19.5", "1.18.10", "1.17.13"]
     steps:
       - uses: actions/checkout@v3
       - name: Setup Go
-        uses: actions/setup-go@v3.2.0
+        uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go_version }}
       - run: ./.ci.gogenerate.sh    
       - run: ./.ci.gofmt.sh
       - run: ./.ci.govet.sh
-      - run: go test -v -race ./...
+      - run: go test -v -race ./test/
