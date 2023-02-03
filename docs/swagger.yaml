@@ -1,0 +1,2281 @@
+---
+swagger: "2.0"
+info:
+  description: "vmrest 1.3.0 build-20800274"
+  version: "1.3.0"
+  title: "VMware Workstation REST API"
+  termsOfService: "http://swagger.io/terms/"
+basePath: "/api"
+tags:
+- name: "VM Management"
+- name: "VM Power Management"
+- name: "VM Shared Folders Management"
+- name: "VM Network Adapters Management"
+- name: "Host Networks Management"
+schemes:
+- "http"
+- "https"
+consumes:
+- "application/vnd.vmware.vmw.rest-v1+json"
+produces:
+- "application/vnd.vmware.vmw.rest-v1+json"
+paths:
+  /vms:
+    get:
+      tags:
+      - "VM Management"
+      summary: "Returns a list of VM IDs and paths for all VMs"
+      operationId: "getAllVMs"
+      parameters: []
+      responses:
+        "200":
+          description: "All VMs' ID and path"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/VMID"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    post:
+      tags:
+      - "VM Management"
+      summary: "Creates a copy of the VM"
+      operationId: "createVM"
+      parameters:
+      - in: "body"
+        name: "params"
+        description: "Parameters of VM to create"
+        required: true
+        schema:
+          $ref: "#/definitions/VMCloneParameter"
+        x-exportParamName: "Params"
+      responses:
+        "201":
+          description: "VM information"
+          schema:
+            $ref: "#/definitions/VMInformation"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}:
+    get:
+      tags:
+      - "VM Management"
+      summary: "Returns the VM setting information of a VM"
+      operationId: "getVM"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "VM information"
+          schema:
+            $ref: "#/definitions/VMInformation"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "VM Management"
+      summary: "Updates the VM settings"
+      operationId: "updateVM"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - in: "body"
+        name: "parameters"
+        description: "VM definition"
+        required: true
+        schema:
+          $ref: "#/definitions/VMParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "200":
+          description: "VM information"
+          schema:
+            $ref: "#/definitions/VMInformation"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "VM Management"
+      summary: "Deletes a VM"
+      operationId: "deleteVM"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "204":
+          description: "VM deleted"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/restrictions:
+    get:
+      tags:
+      - "VM Management"
+      summary: "Returns the restrictions information of the VM"
+      operationId: "getVMRestrictions"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "VM restrictions information"
+          schema:
+            $ref: "#/definitions/VMRestrictionsInformation"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/registration:
+    post:
+      tags:
+      - "VM Management"
+      summary: "Register VM to VM Library"
+      operationId: "registerVM"
+      parameters:
+      - in: "body"
+        name: "parameters"
+        description: "Parameters of the VM to register"
+        required: true
+        schema:
+          $ref: "#/definitions/VMRegisterParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "201":
+          description: "VM registration information"
+          schema:
+            $ref: "#/definitions/VMRrgistrationInformation"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/params/{name}:
+    get:
+      tags:
+      - "VM Management"
+      summary: "Get the VM config params"
+      operationId: "getVMParams"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - name: "name"
+        in: "path"
+        description: "Name of the param"
+        required: true
+        type: "string"
+        x-exportParamName: "Name"
+      responses:
+        "200":
+          description: "VM config parameter"
+          schema:
+            $ref: "#/definitions/ConfigVMParamsParameter"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/configparams:
+    put:
+      tags:
+      - "VM Management"
+      summary: "update the vm config params"
+      operationId: "configVMParams"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - in: "body"
+        name: "parameters"
+        description: "Parameters set to the VM"
+        required: true
+        schema:
+          $ref: "#/definitions/ConfigVMParamsParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "200":
+          description: "VM config params updated"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/power:
+    get:
+      tags:
+      - "VM Power Management"
+      summary: "Returns the power state of the VM"
+      operationId: "getPowerState"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "VM power state"
+          schema:
+            $ref: "#/definitions/VMPowerState"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "VM Power Management"
+      summary: "Changes the VM power state"
+      operationId: "changePowerState"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - in: "body"
+        name: "operation"
+        description: "VM power operation: on, off, shutdown, suspend, pause, unpause"
+        required: true
+        schema:
+          $ref: "#/definitions/VMPowerOperation"
+        x-exportParamName: "Operation"
+      responses:
+        "200":
+          description: "VM power state"
+          schema:
+            $ref: "#/definitions/VMPowerState"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/sharedfolders:
+    get:
+      tags:
+      - "VM Shared Folders Management"
+      summary: "Returns all shared folders mounted in the VM"
+      operationId: "getAllSharedFolders"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "Shared folders mounted in the VM"
+          schema:
+            $ref: "#/definitions/SharedFolders"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    post:
+      tags:
+      - "VM Shared Folders Management"
+      summary: "Mounts a new shared folder in the VM"
+      operationId: "createSharedFolder"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - in: "body"
+        name: "parameters"
+        description: "Parameters of the shared folder to mount"
+        required: true
+        schema:
+          $ref: "#/definitions/SharedFolder"
+        x-exportParamName: "Parameters"
+      responses:
+        "201":
+          description: "Shared folders mounted in the VM"
+          schema:
+            $ref: "#/definitions/SharedFolders"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/sharedfolders/{folder id}:
+    put:
+      tags:
+      - "VM Shared Folders Management"
+      summary: "Updates a shared folder mounted in the VM"
+      operationId: "updataSharedFolder"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - name: "folder id"
+        in: "path"
+        description: "ID of VM shared folder"
+        required: true
+        type: "string"
+        x-exportParamName: "FolderId"
+      - in: "body"
+        name: "parameters"
+        description: "Parameters of the shared folder to update to"
+        required: true
+        schema:
+          $ref: "#/definitions/SharedFolderParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "200":
+          description: "Shared folders mounted in the VM"
+          schema:
+            $ref: "#/definitions/SharedFolders"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "VM Shared Folders Management"
+      summary: "Deletes a shared folder"
+      operationId: "deleteSharedFolder"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - name: "folder id"
+        in: "path"
+        description: "ID of shared folder"
+        required: true
+        type: "string"
+        x-exportParamName: "FolderId"
+      responses:
+        "204":
+          description: "Shared folder deleted"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/nic:
+    get:
+      tags:
+      - "VM Network Adapters Management"
+      summary: "Returns all network adapters in the VM"
+      operationId: "getAllNICDevices"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "Network adapters in the VM"
+          schema:
+            $ref: "#/definitions/NICDevices"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    post:
+      tags:
+      - "VM Network Adapters Management"
+      summary: "Creates a network adapter in the VM"
+      operationId: "createNICDevice"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - in: "body"
+        name: "parameters"
+        description: "Parameters of network adapter to create"
+        required: true
+        schema:
+          $ref: "#/definitions/NICDeviceParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "201":
+          description: "Information of the network adapter created"
+          schema:
+            $ref: "#/definitions/NICDevice"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/nic/{index}:
+    put:
+      tags:
+      - "VM Network Adapters Management"
+      summary: "Updates a network adapter in the VM"
+      operationId: "updateNICDevice"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - name: "index"
+        in: "path"
+        description: "Index of VM network adapter"
+        required: true
+        type: "string"
+        x-exportParamName: "Index"
+      - in: "body"
+        name: "parameters"
+        description: "Parameters of network adapter to update to"
+        required: true
+        schema:
+          $ref: "#/definitions/NICDeviceParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "200":
+          description: "Information of the network adapter updated to"
+          schema:
+            $ref: "#/definitions/NICDevice"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "VM Network Adapters Management"
+      summary: "Deletes a VM network adapter"
+      operationId: "deleteNICDevice"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      - name: "index"
+        in: "path"
+        description: "Index of VM network adapter"
+        required: true
+        type: "string"
+        x-exportParamName: "Index"
+      responses:
+        "204":
+          description: "Network adapter deleted"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/ip:
+    get:
+      tags:
+      - "VM Network Adapters Management"
+      summary: "Returns the IP address of a VM"
+      operationId: "getIPAddress"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "VM IP address"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vms/{id}/nicips:
+    get:
+      tags:
+      - "VM Network Adapters Management"
+      summary: "Returns the IP stack configuration of all NICs of a VM"
+      operationId: "getNicInfo"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of VM"
+        required: true
+        type: "string"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "VM NICs IP stack configuration"
+          schema:
+            $ref: "#/definitions/NicIpStackAll"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vmnets:
+    post:
+      tags:
+      - "Host Networks Management"
+      summary: "Creates a virtual network"
+      operationId: "createNetwork"
+      parameters:
+      - in: "body"
+        name: "parameters"
+        description: "Host network to be created"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateVmnetParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "201":
+          description: "Virtual network"
+          schema:
+            $ref: "#/definitions/Network"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vmnet:
+    get:
+      tags:
+      - "Host Networks Management"
+      summary: "Returns all virtual networks"
+      operationId: "getAllNetworks"
+      parameters: []
+      responses:
+        "200":
+          description: "All virtual networks"
+          schema:
+            $ref: "#/definitions/Networks"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vmnet/{vmnet}/portforward:
+    get:
+      tags:
+      - "Host Networks Management"
+      summary: "Returns all port forwardings"
+      operationId: "getPortforwards"
+      parameters:
+      - name: "vmnet"
+        in: "path"
+        description: "NAT type of virtual network"
+        required: true
+        type: "string"
+        x-exportParamName: "Vmnet"
+      responses:
+        "200":
+          description: "All port forwardings"
+          schema:
+            $ref: "#/definitions/Portforwards"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vmnet/{vmnet}/mactoip:
+    get:
+      tags:
+      - "Host Networks Management"
+      summary: "Returns all MAC-to-IP settings for DHCP service"
+      operationId: "getMACToIPs"
+      parameters:
+      - name: "vmnet"
+        in: "path"
+        description: "Virtual network that has DHCP enabled"
+        required: true
+        type: "string"
+        x-exportParamName: "Vmnet"
+      responses:
+        "200":
+          description: "All mac to ip settings"
+          schema:
+            $ref: "#/definitions/MACToIPs"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vmnet/{vmnet}/mactoip/{mac}:
+    put:
+      tags:
+      - "Host Networks Management"
+      summary: "Updates the MAC-to-IP binding"
+      operationId: "updateMacToIP"
+      parameters:
+      - name: "vmnet"
+        in: "path"
+        description: "Virtual network that enabled DHCP"
+        required: true
+        type: "string"
+        x-exportParamName: "Vmnet"
+      - name: "mac"
+        in: "path"
+        description: "Mac address that want to be mapped with a given IP"
+        required: true
+        type: "string"
+        x-exportParamName: "Mac"
+      - in: "body"
+        name: "parameters"
+        description: "IP that will be assigned to given Mac address. If empty IP,\
+          \ the original Mac to IP binding will be deleted"
+        required: true
+        schema:
+          $ref: "#/definitions/MacToIPParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "200":
+          description: "Mac to IP mapping updated"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "409":
+          description: "Resource state conflicts"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /vmnet/{vmnet}/portforward/{protocol}/{port}:
+    put:
+      tags:
+      - "Host Networks Management"
+      summary: "Updates port forwarding"
+      operationId: "updatePortforward"
+      parameters:
+      - name: "vmnet"
+        in: "path"
+        description: "NAT type of virtual network"
+        required: true
+        type: "string"
+        x-exportParamName: "Vmnet"
+      - name: "protocol"
+        in: "path"
+        description: "Protocol type: tcp, udp"
+        required: true
+        type: "string"
+        x-exportParamName: "Protocol"
+      - name: "port"
+        in: "path"
+        description: "Host port number"
+        required: true
+        type: "integer"
+        format: "int16"
+        x-exportParamName: "Port"
+      - in: "body"
+        name: "parameters"
+        description: "Guest to forward to"
+        required: true
+        schema:
+          $ref: "#/definitions/PortforwardParameter"
+        x-exportParamName: "Parameters"
+      responses:
+        "200":
+          description: "Port forwarding updated"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "Host Networks Management"
+      summary: "Deletes port forwarding"
+      operationId: "deletePortforward"
+      parameters:
+      - name: "vmnet"
+        in: "path"
+        description: "NAT type of virtual network"
+        required: true
+        type: "string"
+        x-exportParamName: "Vmnet"
+      - name: "protocol"
+        in: "path"
+        description: "Protocol type: tcp, udp"
+        required: true
+        type: "string"
+        x-exportParamName: "Protocol"
+      - name: "port"
+        in: "path"
+        description: "Host port number"
+        required: true
+        type: "integer"
+        format: "int16"
+        x-exportParamName: "Port"
+      responses:
+        "204":
+          description: "Port forwarding deleted"
+        "400":
+          description: "Invalid parameters"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "401":
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "403":
+          description: "Permission denied"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "404":
+          description: "No such resource"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "406":
+          description: "Content type was not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        "500":
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+securityDefinitions:
+  BasicAuth:
+    type: "basic"
+definitions:
+  VMParameter:
+    type: "object"
+    properties:
+      processors:
+        $ref: "#/definitions/VMProcessors"
+      memory:
+        $ref: "#/definitions/VMMemory"
+  VMInformation:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+      cpu:
+        $ref: "#/definitions/VMCPU"
+      memory:
+        $ref: "#/definitions/VMMemory"
+    example:
+      memory: {}
+      cpu:
+        processors: {}
+      id: "id"
+  VMRestrictionsInformation:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+      managedOrg:
+        type: "string"
+        description: "The organization manages the VM"
+      integrityconstraint:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      cpu:
+        $ref: "#/definitions/VMCPU"
+      memory:
+        $ref: "#/definitions/VMMemory"
+      applianceView:
+        $ref: "#/definitions/VMApplianceView"
+      cddvdList:
+        $ref: "#/definitions/VMConnectedDeviceList"
+      floopyList:
+        $ref: "#/definitions/VMConnectedDeviceList"
+      firewareType:
+        $ref: "#/definitions/Number"
+      guestIsolation:
+        $ref: "#/definitions/VMGuestIsolation"
+      niclist:
+        $ref: "#/definitions/NICDevices"
+      parallelPortList:
+        $ref: "#/definitions/VMConnectedDeviceList"
+      serialPortList:
+        $ref: "#/definitions/VMConnectedDeviceList"
+      usbList:
+        $ref: "#/definitions/VMUsbList"
+      remoteVNC:
+        $ref: "#/definitions/VMRemoteVNC"
+    example:
+      parallelPortList:
+        devices:
+        - devicePath: "devicePath"
+          startConnected: "true"
+        - devicePath: "devicePath"
+          startConnected: "true"
+        num: {}
+      memory: {}
+      niclist:
+        num: {}
+        nics:
+        - macAddress: "macAddress"
+          vmnet: "vmnet"
+          index: {}
+          type: "bridged"
+        - macAddress: "macAddress"
+          vmnet: "vmnet"
+          index: {}
+          type: "bridged"
+      cpu:
+        processors: {}
+      floopyList:
+        devices:
+        - devicePath: "devicePath"
+          startConnected: "true"
+        - devicePath: "devicePath"
+          startConnected: "true"
+        num: {}
+      applianceView:
+        showAtPowerOn: "true"
+        port: {}
+        author: "author"
+        version: "version"
+      cddvdList:
+        devices:
+        - devicePath: "devicePath"
+          startConnected: "true"
+        - devicePath: "devicePath"
+          startConnected: "true"
+        num: {}
+      integrityconstraint: "true"
+      remoteVNC:
+        VNCEnabled: "true"
+      managedOrg: "managedOrg"
+      guestIsolation:
+        copyDisabled: "true"
+        dndDisabled: "true"
+        hgfsDisabled: "true"
+        pasteDisabled: "true"
+      id: "id"
+      serialPortList:
+        devices:
+        - devicePath: "devicePath"
+          startConnected: "true"
+        - devicePath: "devicePath"
+          startConnected: "true"
+        num: {}
+      usbList:
+        usbDevices:
+        - connected: "true"
+          backingInfo: "backingInfo"
+        - connected: "true"
+          backingInfo: "backingInfo"
+  VMApplianceView:
+    type: "object"
+    properties:
+      author:
+        type: "string"
+      version:
+        type: "string"
+      port:
+        $ref: "#/definitions/Port"
+      showAtPowerOn:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+    example:
+      showAtPowerOn: "true"
+      port: {}
+      author: "author"
+      version: "version"
+  VMConnectedDevice:
+    type: "object"
+    properties:
+      index:
+        $ref: "#/definitions/Number"
+      startConnected:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      connectionStatus:
+        $ref: "#/definitions/Number"
+      devicePath:
+        type: "string"
+    example:
+      devicePath: "devicePath"
+      startConnected: "true"
+  VMConnectedDeviceList:
+    type: "object"
+    properties:
+      num:
+        $ref: "#/definitions/Number"
+      devices:
+        type: "array"
+        items:
+          $ref: "#/definitions/VMConnectedDevice"
+    example:
+      devices:
+      - devicePath: "devicePath"
+        startConnected: "true"
+      - devicePath: "devicePath"
+        startConnected: "true"
+      num: {}
+  VMGuestIsolation:
+    type: "object"
+    properties:
+      copyDisabled:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      dndDisabled:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      hgfsDisabled:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      pasteDisabled:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+    example:
+      copyDisabled: "true"
+      dndDisabled: "true"
+      hgfsDisabled: "true"
+      pasteDisabled: "true"
+  VMUsbDevice:
+    type: "object"
+    properties:
+      index:
+        $ref: "#/definitions/Number"
+      connected:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      backingInfo:
+        type: "string"
+      BackingType:
+        $ref: "#/definitions/Number"
+    example:
+      connected: "true"
+      backingInfo: "backingInfo"
+  VMUsbList:
+    type: "object"
+    properties:
+      num:
+        $ref: "#/definitions/Number"
+      usbDevices:
+        type: "array"
+        items:
+          $ref: "#/definitions/VMUsbDevice"
+    example:
+      usbDevices:
+      - connected: "true"
+        backingInfo: "backingInfo"
+      - connected: "true"
+        backingInfo: "backingInfo"
+  VMRemoteVNC:
+    type: "object"
+    properties:
+      VNCEnabled:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      VNCPort:
+        $ref: "#/definitions/Port"
+    example:
+      VNCEnabled: "true"
+  VMRegisterParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Register VM name"
+      path:
+        type: "string"
+        description: "Register VM path"
+  VMRrgistrationInformation:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Registered VM name id"
+      path:
+        type: "string"
+        description: "Registered VM path"
+    example:
+      path: "path"
+      id: "id"
+  ConfigVMParamsParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "config params name"
+      value:
+        type: "string"
+        description: "config params value"
+    example:
+      name: "name"
+      value: "value"
+  VMCloneParameter:
+    type: "object"
+    required:
+    - "name"
+    - "parentId"
+    properties:
+      name:
+        type: "string"
+        description: "New VM name"
+      parentId:
+        type: "string"
+        description: "Existing VM ID to clone."
+  VMID:
+    required:
+    - "id"
+    - "path"
+    properties:
+      id:
+        type: "string"
+        description: "ID of the VM"
+      path:
+        type: "string"
+        description: "Path of the VM"
+    example:
+      path: "path"
+      id: "id"
+  VMPowerState:
+    type: "object"
+    required:
+    - "power_state"
+    properties:
+      power_state:
+        type: "string"
+        enum:
+        - "poweredOn"
+        - "poweredOff"
+        - "paused"
+        - "suspended"
+    example:
+      power_state: "poweredOn"
+  VMCPU:
+    type: "object"
+    properties:
+      processors:
+        $ref: "#/definitions/VMProcessors"
+    description: "The CPU information of VM"
+    example:
+      processors: {}
+  VMProcessors:
+    type: "integer"
+    format: "int32"
+    description: "Number of processor cores"
+    default: 1
+  VMMemory:
+    type: "integer"
+    format: "int32"
+    description: "Memory size in mega bytes"
+    default: 512
+  VMPowerOperation:
+    type: "string"
+    enum:
+    - "on"
+    - "off"
+    - "shutdown"
+    - "suspend"
+    - "pause"
+    - "unpause"
+  SharedFolder:
+    required:
+    - "flags"
+    - "folder_id"
+    - "host_path"
+    properties:
+      folder_id:
+        type: "string"
+        description: "ID of folder which be mounted to the host"
+      host_path:
+        type: "string"
+        description: "Path of the host shared folder"
+      flags:
+        type: "integer"
+        description: "The flags property specifies how the folder will be accessed\
+          \ by the VM.\nThere is only one flag supported which is \"4\" and means\
+          \ read/write access.\n"
+  SharedFolders:
+    type: "array"
+    description: "The shared folders mounted to this VM"
+    items:
+      $ref: "#/definitions/SharedFolder"
+  SharedFolderParameter:
+    required:
+    - "flags"
+    - "host_path"
+    properties:
+      host_path:
+        type: "string"
+        description: "Path of the host shared folder"
+      flags:
+        type: "integer"
+        description: "The flags property specifies how the folder will be accessed\
+          \ by the VM.\nThere is only one flag supported which is \"4\" and means\
+          \ read/write access.\n"
+  NICDevice:
+    required:
+    - "index"
+    - "macAddress"
+    - "type"
+    - "vmnet"
+    properties:
+      index:
+        $ref: "#/definitions/NICIndex"
+      type:
+        type: "string"
+        description: "The network type of network adapter"
+        enum:
+        - "bridged"
+        - "nat"
+        - "hostonly"
+        - "custom"
+      vmnet:
+        type: "string"
+        description: "The vmnet name"
+      macAddress:
+        type: "string"
+        description: "Mac address"
+    example:
+      macAddress: "macAddress"
+      vmnet: "vmnet"
+      index: {}
+      type: "bridged"
+  NICDevices:
+    type: "object"
+    required:
+    - "nics"
+    - "num"
+    properties:
+      num:
+        $ref: "#/definitions/NICNumber"
+      nics:
+        type: "array"
+        description: "The network adapter added to this VM"
+        items:
+          $ref: "#/definitions/NICDevice"
+    description: "The list of network adapters"
+    example:
+      num: {}
+      nics:
+      - macAddress: "macAddress"
+        vmnet: "vmnet"
+        index: {}
+        type: "bridged"
+      - macAddress: "macAddress"
+        vmnet: "vmnet"
+        index: {}
+        type: "bridged"
+  NICDeviceParameter:
+    required:
+    - "type"
+    - "vmnet"
+    properties:
+      type:
+        type: "string"
+        description: "The network type of network adapter"
+        enum:
+        - "custom"
+        - "bridged"
+        - "nat"
+        - "hostonly"
+      vmnet:
+        type: "string"
+        description: "The vmnet name, it should only be used while type is custom"
+  CreateVmnetParameter:
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "The host network name"
+      type:
+        type: "string"
+        description: "The host network type"
+        enum:
+        - "nat"
+        - "hostOnly"
+  Network:
+    required:
+    - "dhcp"
+    - "mask"
+    - "name"
+    - "subnet"
+    - "type"
+    properties:
+      name:
+        type: "string"
+        description: "Name of virtual network"
+      type:
+        type: "string"
+        enum:
+        - "bridged"
+        - "nat"
+        - "hostOnly"
+      dhcp:
+        type: "string"
+        enum:
+        - "true"
+        - "false"
+      subnet:
+        type: "string"
+      mask:
+        type: "string"
+    description: "The virtual network"
+    example:
+      subnet: "subnet"
+      name: "name"
+      type: "bridged"
+      dhcp: "true"
+      mask: "mask"
+  Networks:
+    type: "object"
+    required:
+    - "num"
+    - "vmnets"
+    properties:
+      num:
+        $ref: "#/definitions/Number"
+      vmnets:
+        type: "array"
+        description: "The list of virtual networks"
+        items:
+          $ref: "#/definitions/Network"
+    description: "The list of virtual networks"
+    example:
+      vmnets:
+      - subnet: "subnet"
+        name: "name"
+        type: "bridged"
+        dhcp: "true"
+        mask: "mask"
+      - subnet: "subnet"
+        name: "name"
+        type: "bridged"
+        dhcp: "true"
+        mask: "mask"
+      num: {}
+  MACToIP:
+    required:
+    - "ip"
+    - "mac"
+    - "vmnet"
+    properties:
+      vmnet:
+        type: "string"
+      mac:
+        type: "string"
+      ip:
+        type: "string"
+    description: "The MAC to IP setting"
+    example:
+      vmnet: "vmnet"
+      ip: "ip"
+      mac: "mac"
+  MACToIPs:
+    type: "object"
+    required:
+    - "num"
+    properties:
+      num:
+        $ref: "#/definitions/Number"
+      mactoips:
+        type: "array"
+        description: "The list of MAC to IP settings"
+        items:
+          $ref: "#/definitions/MACToIP"
+    description: "The list of MAC to IP settings"
+    example:
+      mactoips:
+      - vmnet: "vmnet"
+        ip: "ip"
+        mac: "mac"
+      - vmnet: "vmnet"
+        ip: "ip"
+        mac: "mac"
+      num: {}
+  Portforward:
+    required:
+    - "desc"
+    - "guest"
+    - "port"
+    - "protocol"
+    properties:
+      port:
+        $ref: "#/definitions/Port"
+      protocol:
+        type: "string"
+        enum:
+        - "tcp"
+        - "udp"
+      desc:
+        type: "string"
+      guest:
+        $ref: "#/definitions/Portforward_guest"
+    description: "The port forwarding"
+    example:
+      protocol: "tcp"
+      port: {}
+      guest:
+        ip: "ip"
+      desc: "desc"
+  Portforwards:
+    type: "object"
+    required:
+    - "num"
+    - "port_forwardings"
+    properties:
+      num:
+        $ref: "#/definitions/Number"
+      port_forwardings:
+        type: "array"
+        description: "The list of port forwardings"
+        items:
+          $ref: "#/definitions/Portforward"
+    description: "The list of port forwarding"
+    example:
+      num: {}
+      port_forwardings:
+      - protocol: "tcp"
+        port: {}
+        guest:
+          ip: "ip"
+        desc: "desc"
+      - protocol: "tcp"
+        port: {}
+        guest:
+          ip: "ip"
+        desc: "desc"
+  PortforwardParameter:
+    required:
+    - "guestIp"
+    - "guestPort"
+    properties:
+      guestIp:
+        type: "string"
+      guestPort:
+        $ref: "#/definitions/Port"
+      desc:
+        type: "string"
+  NicIpStack:
+    type: "object"
+    required:
+    - "mac"
+    properties:
+      mac:
+        description: "Mac address of the interface"
+        $ref: "#/definitions/MacAddress"
+      ip:
+        type: "array"
+        description: "IP address(es) of the interface (CIDR)"
+        items:
+          $ref: "#/definitions/IPNetAddress"
+      dns:
+        description: "DNS configuration of the interface"
+        $ref: "#/definitions/DnsConfig"
+      wins:
+        description: "WINS configuration of the interface"
+        $ref: "#/definitions/WinsConfig"
+      dhcp4:
+        description: "DHCPv4 configuration of the interface"
+        $ref: "#/definitions/DhcpConfig"
+      dhcp6:
+        description: "DHCPv6 configuration of the interface"
+        $ref: "#/definitions/DhcpConfig"
+    description: "Information about a NIC"
+    example:
+      wins:
+        secondary: "secondary"
+        primary: "primary"
+      dhcp4:
+        enabled: true
+        setting: "setting"
+      dhcp6:
+        enabled: true
+        setting: "setting"
+      ip:
+      - {}
+      - {}
+      dns:
+        server:
+        - "server"
+        - "server"
+        hostname: "hostname"
+        search:
+        - "search"
+        - "search"
+        domainname: "domainname"
+      mac: {}
+  NicIpStackAll:
+    type: "object"
+    properties:
+      nics:
+        $ref: "#/definitions/NicIpStack"
+      routes:
+        type: "array"
+        items:
+          $ref: "#/definitions/RouteEntry"
+      dns:
+        description: "Global DNS configuration"
+        $ref: "#/definitions/DnsConfig"
+      wins:
+        description: "Global WINS configuration"
+        $ref: "#/definitions/WinsConfig"
+      dhcpv4:
+        description: "Global DHCPv4 configuration"
+        $ref: "#/definitions/DhcpConfig"
+      dhcpv6:
+        description: "Global DHCPv6 configuration"
+        $ref: "#/definitions/DhcpConfig"
+    description: "Information about all NICs"
+    example:
+      wins:
+        secondary: "secondary"
+        primary: "primary"
+      routes:
+      - prefix: {}
+        dest: {}
+      - prefix: {}
+        dest: {}
+      dhcpv4:
+        enabled: true
+        setting: "setting"
+      nics:
+        wins:
+          secondary: "secondary"
+          primary: "primary"
+        dhcp4:
+          enabled: true
+          setting: "setting"
+        dhcp6:
+          enabled: true
+          setting: "setting"
+        ip:
+        - {}
+        - {}
+        dns:
+          server:
+          - "server"
+          - "server"
+          hostname: "hostname"
+          search:
+          - "search"
+          - "search"
+          domainname: "domainname"
+        mac: {}
+      dns:
+        server:
+        - "server"
+        - "server"
+        hostname: "hostname"
+        search:
+        - "search"
+        - "search"
+        domainname: "domainname"
+      dhcpv6:
+        enabled: true
+        setting: "setting"
+  Number:
+    type: "integer"
+    format: "int32"
+    description: "Number of items"
+    default: 0
+  NICNumber:
+    type: "integer"
+    format: "int32"
+    description: "Number of NIC devices"
+    default: 1
+  NICIndex:
+    type: "integer"
+    format: "int32"
+    description: "Index of Network Adapters"
+    default: 1
+  Port:
+    type: "integer"
+    format: "int16"
+    description: "port of communication"
+    default: 0
+  MacAddress:
+    type: "string"
+    description: "Mac address, E.g., de:ad:be:ef:12:34"
+  IPAddress:
+    type: "string"
+    description: "IP address"
+  IPNetAddress:
+    type: "string"
+    description: "IP address in CIDR notation, E.g., 192.168.0.1/24"
+  DnsConfig:
+    type: "object"
+    properties:
+      hostname:
+        type: "string"
+      domainname:
+        type: "string"
+      server:
+        type: "array"
+        items:
+          type: "string"
+      search:
+        type: "array"
+        items:
+          type: "string"
+    description: "DNS configuration"
+    example:
+      server:
+      - "server"
+      - "server"
+      hostname: "hostname"
+      search:
+      - "search"
+      - "search"
+      domainname: "domainname"
+  DhcpConfig:
+    type: "object"
+    required:
+    - "enabled"
+    - "setting"
+    properties:
+      enabled:
+        type: "boolean"
+      setting:
+        type: "string"
+    description: "DHCP configuration"
+    example:
+      enabled: true
+      setting: "setting"
+  WinsConfig:
+    type: "object"
+    required:
+    - "primary"
+    - "secondary"
+    properties:
+      primary:
+        type: "string"
+      secondary:
+        type: "string"
+    description: "WINS configuration"
+    example:
+      secondary: "secondary"
+      primary: "primary"
+  RouteEntry:
+    type: "object"
+    required:
+    - "dest"
+    - "interface"
+    - "metric"
+    - "prefix"
+    - "type"
+    properties:
+      dest:
+        $ref: "#/definitions/IPAddress"
+      prefix:
+        $ref: "#/definitions/Number"
+      nexthop:
+        $ref: "#/definitions/IPAddress"
+      interface:
+        description: "Id of NIC"
+        $ref: "#/definitions/Number"
+      type:
+        $ref: "#/definitions/Number"
+      metric:
+        $ref: "#/definitions/Number"
+    description: "Routing entry"
+    example:
+      prefix: {}
+      dest: {}
+  DaemonState:
+    type: "string"
+    enum:
+    - "on"
+    - "off"
+  MacToIPParameter:
+    required:
+    - "IP"
+    properties:
+      IP:
+        type: "string"
+  ErrorModel:
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+    example:
+      code: 0
+      message: "message"
+  inline_response_200:
+    type: "object"
+    required:
+    - "ip"
+    properties:
+      ip:
+        type: "string"
+        description: "Guest OS IP address"
+    example:
+      ip: "ip"
+  Portforward_guest:
+    type: "object"
+    required:
+    - "ip"
+    - "port"
+    properties:
+      ip:
+        type: "string"
+      port:
+        $ref: "#/definitions/Port"
+    example:
+      ip: "ip"
