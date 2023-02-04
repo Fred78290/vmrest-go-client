@@ -112,7 +112,7 @@ import (
 )
 
 func main() {
-  cfg := client.NewConfiguration("username", "password", 8697)
+  cfg := client.NewConfiguration("username", "password", 8697, true)
 
   if client, err := client.NewAPIClient(cfg); err == nil {
     vms, _ := client.GetAllVMs()

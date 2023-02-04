@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"encoding/xml"
 	"errors"
@@ -40,15 +41,37 @@ type clientWrapper struct {
 	Logger Logger
 }
 
-func NewHttpClient(endpoint, userAgent, userName, password string, timeout time.Duration) (api.Client, error) {
+/*
+NewHttpClient Changes the VM power state
+  - @param endpoint the endpoint to joint vmrest
+  - @param userAgent
+  - @param userName
+  - @param password
+  - @param timeout operation timeout in seconds
+  - @param unsecureTLS unsecure tls
+
+@return api.Client
+*/
+func NewHttpClient(endpoint, userAgent, userName, password string, timeout time.Duration, unsecureTLS bool) (api.Client, error) {
+
+	if len(endpoint) == 0 {
+		endpoint = "https://127.0.0.1:8697"
+	}
 
 	client := clientWrapper{
 		APIEndPoint:  endpoint,
 		APIUserAgent: userAgent,
 		APIPassword:  password,
 		APIUserName:  userName,
-		Client:       &http.Client{},
 		Timeout:      timeout,
+		Client: &http.Client{
+			Timeout: timeout * time.Second,
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{
+					InsecureSkipVerify: unsecureTLS,
+				},
+			},
+		},
 	}
 
 	// Get and check the configuration
