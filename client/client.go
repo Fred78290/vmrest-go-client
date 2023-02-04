@@ -35,7 +35,7 @@ type APIClient struct {
 // optionally a custom http.Client to allow for advanced features such as caching.
 func NewAPIClient(cfg *Configuration) (*APIClient, error) {
 
-	if c, err := NewHttpClient(cfg.Endpoint, cfg.UserAgent, cfg.UserName, cfg.Password, cfg.Timeout); err != nil {
+	if c, err := NewHttpClient(cfg.Endpoint, cfg.UserAgent, cfg.UserName, cfg.Password, cfg.Timeout, cfg.UnsecureTLS); err != nil {
 		return nil, err
 	} else {
 		return &APIClient{

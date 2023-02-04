@@ -57,11 +57,12 @@ type APIKey struct {
 }
 
 type Configuration struct {
-	Endpoint  string        `json:"endpoint,omitempty"`
-	UserAgent string        `json:"userAgent,omitempty"`
-	UserName  string        `json:"userName,omitempty"`
-	Password  string        `json:"password,omitempty"`
-	Timeout   time.Duration `json:"timeout,omitempty"`
+	Endpoint    string        `json:"endpoint,omitempty"`
+	UserAgent   string        `json:"userAgent,omitempty"`
+	UserName    string        `json:"userName,omitempty"`
+	Password    string        `json:"password,omitempty"`
+	Timeout     time.Duration `json:"timeout,omitempty"`
+	UnsecureTLS bool          `json:"unsecure-tls,omitempty"`
 }
 
 func NewConfiguration(username, password string, port int) *Configuration {
