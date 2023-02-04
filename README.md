@@ -1,3 +1,6 @@
+[![All builds](https://github.com/Fred78290/vmrest-go-client/actions/workflows/main.yml/badge.svg)](https://github.com/Fred78290/vmrest-go-client/actions/workflows/main.yml)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Fred78290_vmrest-go-glient&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Fred78290_vmrest-go-glient)
+[![Licence](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Fred78290/vmrest-go-client/blob/master/LICENSE)
+
 # Go API client for vmrest
 
 vmrest 1.3.0 build-20800274
