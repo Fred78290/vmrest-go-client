@@ -25,19 +25,18 @@ type powerManagementApiService struct {
 	client Client
 }
 
+// NewPowerManagementApiService create service for PowerManagementApiService
 func NewPowerManagementApiService(client Client) PowerManagementApiService {
 	return &powerManagementApiService{
 		client: client,
 	}
 }
 
-/*
-ChangePowerState Changes the VM power state
-  - @param id ID of VM
-  - @param operation VM power operation: on, off, shutdown, suspend, pause, unpause
-
-@return VmPowerState
-*/
+// ChangePowerState Changes the VM power state
+//   - @param id ID of VM
+//   - @param operation VM power operation: on, off, shutdown, suspend, pause, unpause
+//
+// @return VmPowerState
 func (a *powerManagementApiService) ChangePowerState(id string, operation model.VmPowerOperation) (*model.VmPowerState, error) {
 	var returnValue model.VmPowerState
 
@@ -48,12 +47,10 @@ func (a *powerManagementApiService) ChangePowerState(id string, operation model.
 	}
 }
 
-/*
-GetPowerState Returns the power state of the VM
-  - @param id ID of VM
-
-@return VmPowerState
-*/
+// GetPowerState Returns the power state of the VM
+//   - @param id ID of VM
+//
+// @return VmPowerState
 func (a *powerManagementApiService) GetPowerState(id string) (*model.VmPowerState, error) {
 	var returnValue model.VmPowerState
 

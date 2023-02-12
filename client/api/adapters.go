@@ -25,19 +25,18 @@ type networkAdaptersManagementApiService struct {
 	client Client
 }
 
+// NewNetworkAdaptersManagementApiService create service for NetworkAdaptersManagementApiService
 func NewNetworkAdaptersManagementApiService(client Client) NetworkAdaptersManagementApiService {
 	return &networkAdaptersManagementApiService{
 		client: client,
 	}
 }
 
-/*
-CreateNICDevice Creates a network adapter in the VM
-  - @param id ID of VM
-  - @param parameters Parameters of network adapter to create
-
-@return NicDevice
-*/
+// CreateNICDevice Creates a network adapter in the VM
+//   - @param id ID of VM
+//   - @param parameters Parameters of network adapter to create
+//
+// @return NicDevice
 func (a *networkAdaptersManagementApiService) CreateNICDevice(id string, parameters *model.NicDeviceParameter) (*model.NicDevice, error) {
 	var returnValue model.NicDevice
 
@@ -48,11 +47,9 @@ func (a *networkAdaptersManagementApiService) CreateNICDevice(id string, paramet
 	}
 }
 
-/*
-DeleteNICDevice Deletes a VM network adapter
-  - @param id ID of VM
-  - @param index Index of VM network adapter
-*/
+// DeleteNICDevice Deletes a VM network adapter
+//   - @param id ID of VM
+//   - @param index Index of VM network adapter
 func (a *networkAdaptersManagementApiService) DeleteNICDevice(id string, index int) error {
 	if err := a.client.Delete(fmt.Sprintf("/api/vms/%s/nic/%d", id, index), nil); err != nil {
 		return err
@@ -61,12 +58,10 @@ func (a *networkAdaptersManagementApiService) DeleteNICDevice(id string, index i
 	}
 }
 
-/*
-GetAllNICDevices Returns all network adapters in the VM
-  - @param id ID of VM
-
-@return NicDevices
-*/
+// GetAllNICDevices Returns all network adapters in the VM
+//   - @param id ID of VM
+//
+// @return NicDevices
 func (a *networkAdaptersManagementApiService) GetAllNICDevices(id string) (*model.NicDevices, error) {
 	var returnValue model.NicDevices
 
@@ -77,12 +72,10 @@ func (a *networkAdaptersManagementApiService) GetAllNICDevices(id string) (*mode
 	}
 }
 
-/*
-GetIPAddress Returns the IP address of a VM
-  - @param id ID of VM
-
-@return InlineResponse200
-*/
+// GetIPAddress Returns the IP address of a VM
+//   - @param id ID of VM
+//
+// @return InlineResponse200
 func (a *networkAdaptersManagementApiService) GetIPAddress(id string) (*model.InlineResponse200, error) {
 	var returnValue model.InlineResponse200
 
@@ -93,12 +86,10 @@ func (a *networkAdaptersManagementApiService) GetIPAddress(id string) (*model.In
 	}
 }
 
-/*
-GetNicInfo Returns the IP stack configuration of all NICs of a VM
-  - @param id ID of VM
-
-@return NicIpStackAll
-*/
+// GetNicInfo Returns the IP stack configuration of all NICs of a VM
+//   - @param id ID of VM
+//
+// @return NicIpStackAll
 func (a *networkAdaptersManagementApiService) GetNicInfo(id string) (*model.NicIpStackAll, error) {
 	var returnValue model.NicIpStackAll
 
@@ -109,14 +100,12 @@ func (a *networkAdaptersManagementApiService) GetNicInfo(id string) (*model.NicI
 	}
 }
 
-/*
-UpdateNICDevice Updates a network adapter in the VM
-  - @param id ID of VM
-  - @param index Index of VM network adapter
-  - @param parameters Parameters of network adapter to update to
-
-@return NicDevice
-*/
+// UpdateNICDevice Updates a network adapter in the VM
+//   - @param id ID of VM
+//   - @param index Index of VM network adapter
+//   - @param parameters Parameters of network adapter to update to
+//
+// @return NicDevice
 func (a *networkAdaptersManagementApiService) UpdateNICDevice(id string, index int, parameters *model.NicDeviceParameter) (*model.NicDevice, error) {
 	var returnValue model.NicDevice
 

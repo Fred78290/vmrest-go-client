@@ -25,19 +25,18 @@ type sharedFoldersManagementApiService struct {
 	client Client
 }
 
+// NewSharedFoldersManagementApiService create service for SharedFoldersManagementApiService
 func NewSharedFoldersManagementApiService(client Client) SharedFoldersManagementApiService {
 	return &sharedFoldersManagementApiService{
 		client: client,
 	}
 }
 
-/*
-CreateSharedFolder Mounts a new shared folder in the VM
-  - @param id ID of VM
-  - @param parameters Parameters of the shared folder to mount
-
-@return SharedFolders
-*/
+// CreateSharedFolder Mounts a new shared folder in the VM
+//   - @param id ID of VM
+//   - @param parameters Parameters of the shared folder to mount
+//
+// @return SharedFolders
 func (a *sharedFoldersManagementApiService) CreateSharedFolder(id string, parameters *model.SharedFolder) (model.SharedFolders, error) {
 	var returnValue model.SharedFolders
 
@@ -48,21 +47,17 @@ func (a *sharedFoldersManagementApiService) CreateSharedFolder(id string, parame
 	}
 }
 
-/*
-DeleteSharedFolder Deletes a shared folder
-  - @param id ID of VM
-  - @param folderId ID of shared folder
-*/
+// DeleteSharedFolder Deletes a shared folder
+//   - @param id ID of VM
+//   - @param folderId ID of shared folder
 func (a *sharedFoldersManagementApiService) DeleteSharedFolder(id string, folderId string) error {
 	return a.client.Delete(fmt.Sprintf("/api/vms/%s/sharedfolders/%s", id, folderId), nil)
 }
 
-/*
-GetAllSharedFolders Returns all shared folders mounted in the VM
-  - @param id ID of VM
-
-@return SharedFolders
-*/
+// GetAllSharedFolders Returns all shared folders mounted in the VM
+//   - @param id ID of VM
+//
+// @return SharedFolders
 func (a *sharedFoldersManagementApiService) GetAllSharedFolders(id string) (model.SharedFolders, error) {
 	var returnValue model.SharedFolders
 
@@ -73,14 +68,12 @@ func (a *sharedFoldersManagementApiService) GetAllSharedFolders(id string) (mode
 	}
 }
 
-/*
-UpdateSharedFolder Updates a shared folder mounted in the VM
-  - @param id ID of VM
-  - @param folderId ID of VM shared folder
-  - @param parameters Parameters of the shared folder to update to
-
-@return SharedFolders
-*/
+// UpdateSharedFolder Updates a shared folder mounted in the VM
+//   - @param id ID of VM
+//   - @param folderId ID of VM shared folder
+//   - @param parameters Parameters of the shared folder to update to
+//
+// @return SharedFolders
 func (a *sharedFoldersManagementApiService) UpdateSharedFolder(id string, folderId string, parameters *model.SharedFolderParameter) (model.SharedFolders, error) {
 	var returnValue model.SharedFolders
 

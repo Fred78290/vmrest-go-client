@@ -26,19 +26,18 @@ type managementApiService struct {
 	client Client
 }
 
+// NewManagementApiService create service for ManagementApiService
 func NewManagementApiService(client Client) ManagementApiService {
 	return &managementApiService{
 		client: client,
 	}
 }
 
-/*
-ConfigVMParams update the vm config params
-  - @param id ID of VM
-  - @param parameters Parameters set to the VM
-
-@return ErrorModel
-*/
+// ConfigVMParams update the vm config params
+//   - @param id ID of VM
+//   - @param parameters Parameters set to the VM
+//
+// @return ErrorModel
 func (a *managementApiService) ConfigVMParams(id string, parameters *model.ConfigVmParamsParameter) (*model.ErrorModel, error) {
 	var returnValue model.ErrorModel
 
@@ -49,12 +48,10 @@ func (a *managementApiService) ConfigVMParams(id string, parameters *model.Confi
 	}
 }
 
-/*
-CreateVM Creates a copy of the VM
-  - @param params Parameters of VM to create
-
-@return VmInformation
-*/
+// CreateVM Creates a copy of the VM
+//   - @param params Parameters of VM to create
+//
+// @return VmInformation
 func (a *managementApiService) CreateVM(parameters *model.VmCloneParameter) (*model.VmInformation, error) {
 	var returnValue model.VmInformation
 
@@ -65,19 +62,14 @@ func (a *managementApiService) CreateVM(parameters *model.VmCloneParameter) (*mo
 	}
 }
 
-/*
-DeleteVM Deletes a VM
-  - @param id ID of VM
-*/
+// DeleteVM Deletes a VM
+//   - @param id ID of VM
 func (a *managementApiService) DeleteVM(id string) error {
 	return a.client.Delete(fmt.Sprintf("/api/vms/%s", id), nil)
 }
 
-/*
-GetAllVMs Returns a list of VM IDs and paths for all VMs
-
-@return []Vmid
-*/
+// GetAllVMs Returns a list of VM IDs and paths for all VMs
+// @return []Vmid
 func (a *managementApiService) GetAllVMs() ([]model.Vmid, error) {
 	var returnValue []model.Vmid
 
@@ -88,12 +80,10 @@ func (a *managementApiService) GetAllVMs() ([]model.Vmid, error) {
 	}
 }
 
-/*
-GetVM Returns the VM setting information of a VM
-  - @param id ID of VM
-
-@return VmInformation
-*/
+// GetVM Returns the VM setting information of a VM
+//   - @param id ID of VM
+//
+// @return VmInformation
 func (a *managementApiService) GetVM(id string) (*model.VmInformation, error) {
 	var returnValue model.VmInformation
 
@@ -104,13 +94,11 @@ func (a *managementApiService) GetVM(id string) (*model.VmInformation, error) {
 	}
 }
 
-/*
-GetVMParams Get the VM config params
-  - @param id ID of VM
-  - @param name Name of the param
-
-@return ConfigVmParamsParameter
-*/
+// GetVMParams Get the VM config params
+//   - @param id ID of VM
+//   - @param name Name of the param
+//
+// @return ConfigVmParamsParameter
 func (a *managementApiService) GetVMParams(id string, name string) (*model.ConfigVmParamsParameter, error) {
 	var returnValue model.ConfigVmParamsParameter
 
@@ -121,12 +109,10 @@ func (a *managementApiService) GetVMParams(id string, name string) (*model.Confi
 	}
 }
 
-/*
-GetVMRestrictions Returns the restrictions information of the VM
-  - @param id ID of VM
-
-@return VmRestrictionsInformation
-*/
+// GetVMRestrictions Returns the restrictions information of the VM
+//   - @param id ID of VM
+//
+// @return VmRestrictionsInformation
 func (a *managementApiService) GetVMRestrictions(id string) (*model.VmRestrictionsInformation, error) {
 	var returnValue model.VmRestrictionsInformation
 
@@ -137,12 +123,10 @@ func (a *managementApiService) GetVMRestrictions(id string) (*model.VmRestrictio
 	}
 }
 
-/*
-RegisterVM Register VM to VM Library
-  - @param parameters Parameters of the VM to register
-
-@return VmRegistrationInformation
-*/
+// RegisterVM Register VM to VM Library
+//   - @param parameters Parameters of the VM to register
+//
+// @return VmRegistrationInformation
 func (a *managementApiService) RegisterVM(parameters *model.VmRegisterParameter) (*model.VmRegistrationInformation, error) {
 	var returnValue model.VmRegistrationInformation
 
@@ -153,13 +137,11 @@ func (a *managementApiService) RegisterVM(parameters *model.VmRegisterParameter)
 	}
 }
 
-/*
-UpdateVM Updates the VM settings
-  - @param id ID of VM
-  - @param parameters VM definition
-
-@return VmInformation
-*/
+// UpdateVM Updates the VM settings
+//   - @param id ID of VM
+//   - @param parameters VM definition
+//
+// @return VmInformation
 func (a *managementApiService) UpdateVM(id string, parameters *model.VmParameter) (*model.VmInformation, error) {
 	var returnValue model.VmInformation
 
