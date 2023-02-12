@@ -11,5 +11,7 @@ package model
 
 // The CPU information of VM
 type Vmcpu struct {
+	Common
+
 	Processors int `json:"processors,omitempty"`
 }

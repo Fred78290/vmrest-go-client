@@ -10,6 +10,8 @@
 package model
 
 type NicDevice struct {
+	Common
+
 	Index int `json:"index"`
 	// The network type of network adapter
 	Type string `json:"type"`

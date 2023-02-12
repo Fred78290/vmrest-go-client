@@ -9,10 +9,5 @@
 
 package model
 
-// DHCP configuration
-type DhcpConfig struct {
-	Common
-
-	Enabled bool   `json:"enabled"`
-	Setting string `json:"setting"`
+type Common struct {
 }

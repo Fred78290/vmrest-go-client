@@ -10,6 +10,8 @@
 package model
 
 type VmConnectedDevice struct {
+	Common
+
 	Index            int    `json:"index,omitempty"`
 	StartConnected   string `json:"startConnected,omitempty"`
 	ConnectionStatus int    `json:"connectionStatus,omitempty"`

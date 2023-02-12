@@ -10,5 +10,7 @@
 package model
 
 type VmPowerState struct {
+	Common
+
 	PowerState string `json:"power_state"`
 }

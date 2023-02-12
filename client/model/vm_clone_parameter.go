@@ -10,6 +10,8 @@
 package model
 
 type VmCloneParameter struct {
+	Common
+
 	// New VM name
 	Name string `json:"name"`
 	// Existing VM ID to clone.

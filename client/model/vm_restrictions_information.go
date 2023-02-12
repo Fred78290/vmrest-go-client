@@ -10,6 +10,8 @@
 package model
 
 type VmRestrictionsInformation struct {
+	Common
+
 	Id string `json:"id"`
 	// The organization manages the VM
 	ManagedOrg          string                 `json:"managedOrg,omitempty"`

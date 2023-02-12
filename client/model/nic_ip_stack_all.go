@@ -11,6 +11,8 @@ package model
 
 // Information about all NICs
 type NicIpStackAll struct {
+	Common
+
 	Nics   []NicIpStack `json:"nics,omitempty"`
 	Routes []RouteEntry `json:"routes,omitempty"`
 	// Global DNS configuration

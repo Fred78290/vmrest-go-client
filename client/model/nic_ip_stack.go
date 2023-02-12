@@ -11,6 +11,8 @@ package model
 
 // Information about a NIC
 type NicIpStack struct {
+	Common
+
 	// Mac address of the interface
 	Mac string `json:"mac"`
 	// IP address(es) of the interface (CIDR)

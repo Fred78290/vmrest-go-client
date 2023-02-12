@@ -10,6 +10,8 @@
 package model
 
 type Vmid struct {
+	Common
+
 	// ID of the VM
 	Id string `json:"id"`
 	// Path of the VM

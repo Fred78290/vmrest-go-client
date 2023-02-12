@@ -10,6 +10,8 @@
 package model
 
 type VmGuestIsolation struct {
+	Common
+
 	CopyDisabled  string `json:"copyDisabled,omitempty"`
 	DndDisabled   string `json:"dndDisabled,omitempty"`
 	HgfsDisabled  string `json:"hgfsDisabled,omitempty"`

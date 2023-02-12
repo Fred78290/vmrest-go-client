@@ -10,6 +10,8 @@
 package model
 
 type VmParameter struct {
+	Common
+
 	Processors int `json:"processors,omitempty"`
 	Memory     int `json:"memory,omitempty"`
 }

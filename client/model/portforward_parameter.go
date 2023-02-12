@@ -10,6 +10,8 @@
 package model
 
 type PortforwardParameter struct {
+	Common
+
 	GuestIp   string `json:"guestIp"`
 	GuestPort int    `json:"guestPort"`
 	Desc      string `json:"desc,omitempty"`

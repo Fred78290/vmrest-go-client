@@ -10,6 +10,8 @@
 package model
 
 type VmRemoteVnc struct {
+	Common
+
 	VNCEnabled string `json:"VNCEnabled,omitempty"`
 	VNCPort    int    `json:"VNCPort,omitempty"`
 }

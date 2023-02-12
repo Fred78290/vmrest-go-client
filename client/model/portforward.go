@@ -11,6 +11,8 @@ package model
 
 // The port forwarding
 type Portforward struct {
+	Common
+
 	Port     int               `json:"port"`
 	Protocol string            `json:"protocol"`
 	Desc     string            `json:"desc"`

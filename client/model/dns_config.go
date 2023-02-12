@@ -11,6 +11,8 @@ package model
 
 // DNS configuration
 type DnsConfig struct {
+	Common
+
 	Hostname   string   `json:"hostname,omitempty"`
 	Domainname string   `json:"domainname,omitempty"`
 	Server     []string `json:"server,omitempty"`

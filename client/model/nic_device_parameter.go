@@ -10,6 +10,8 @@
 package model
 
 type NicDeviceParameter struct {
+	Common
+
 	// The network type of network adapter
 	Type string `json:"type"`
 	// The vmnet name, it should only be used while type is custom

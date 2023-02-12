@@ -10,6 +10,8 @@
 package model
 
 type VmUsbDevice struct {
+	Common
+
 	Index       int    `json:"index,omitempty"`
 	Connected   string `json:"connected,omitempty"`
 	BackingInfo string `json:"backingInfo,omitempty"`

@@ -10,6 +10,8 @@
 package model
 
 type VmRegistrationInformation struct {
+	Common
+
 	// Registered VM name id
 	Id string `json:"id,omitempty"`
 	// Registered VM path

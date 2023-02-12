@@ -11,6 +11,8 @@ package model
 
 // The list of network adapters
 type NicDevices struct {
+	Common
+
 	Num int `json:"num"`
 	// The network adapter added to this VM
 	Nics []NicDevice `json:"nics"`

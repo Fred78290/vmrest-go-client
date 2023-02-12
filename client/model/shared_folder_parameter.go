@@ -10,6 +10,8 @@
 package model
 
 type SharedFolderParameter struct {
+	Common
+
 	// Path of the host shared folder
 	HostPath string `json:"host_path"`
 	// The flags property specifies how the folder will be accessed by the VM. There is only one flag supported which is \"4\" and means read/write access.

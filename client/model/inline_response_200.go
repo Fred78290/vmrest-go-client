@@ -10,6 +10,8 @@
 package model
 
 type InlineResponse200 struct {
+	Common
+
 	// Guest OS IP address
 	Ip string `json:"ip"`
 }

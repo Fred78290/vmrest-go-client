@@ -10,6 +10,8 @@
 package model
 
 type SharedFolder struct {
+	Common
+
 	// ID of folder which be mounted to the host
 	FolderId string `json:"folder_id"`
 	// Path of the host shared folder

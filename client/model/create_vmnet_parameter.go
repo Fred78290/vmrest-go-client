@@ -10,6 +10,8 @@
 package model
 
 type CreateVmnetParameter struct {
+	Common
+
 	// The host network name
 	Name string `json:"name"`
 	// The host network type

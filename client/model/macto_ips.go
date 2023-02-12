@@ -11,6 +11,8 @@ package model
 
 // The list of MAC to IP settings
 type MactoIps struct {
+	Common
+
 	Num int `json:"num"`
 	// The list of MAC to IP settings
 	Mactoips []MactoIp `json:"mactoips,omitempty"`

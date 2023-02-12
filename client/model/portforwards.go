@@ -11,6 +11,8 @@ package model
 
 // The list of port forwarding
 type Portforwards struct {
+	Common
+
 	Num int `json:"num"`
 	// The list of port forwardings
 	PortForwardings []Portforward `json:"port_forwardings"`

@@ -11,6 +11,8 @@ package model
 
 // WINS configuration
 type WinsConfig struct {
+	Common
+
 	Primary   string `json:"primary"`
 	Secondary string `json:"secondary"`
 }

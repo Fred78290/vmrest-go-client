@@ -10,6 +10,7 @@
 package model
 
 type ConfigVmParamsParameter struct {
+
 	// config params name
 	Name string `json:"name,omitempty"`
 	// config params value

@@ -10,6 +10,8 @@
 package model
 
 type VmUsbList struct {
+	Common
+
 	Num        int           `json:"num,omitempty"`
 	UsbDevices []VmUsbDevice `json:"usbDevices,omitempty"`
 }

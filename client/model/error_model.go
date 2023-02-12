@@ -10,6 +10,8 @@
 package model
 
 type ErrorModel struct {
+	Common
+
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }

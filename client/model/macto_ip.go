@@ -11,6 +11,8 @@ package model
 
 // The MAC to IP setting
 type MactoIp struct {
+	Common
+
 	Vmnet string `json:"vmnet"`
 	Mac   string `json:"mac"`
 	Ip    string `json:"ip"`

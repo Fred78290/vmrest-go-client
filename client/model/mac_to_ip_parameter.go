@@ -10,5 +10,7 @@
 package model
 
 type MacToIpParameter struct {
+	Common
+
 	IP string `json:"IP"`
 }

@@ -11,6 +11,8 @@ package model
 
 // The list of virtual networks
 type Networks struct {
+	Common
+
 	Num int `json:"num"`
 	// The list of virtual networks
 	Vmnets []Network `json:"vmnets"`

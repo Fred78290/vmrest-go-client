@@ -10,6 +10,8 @@
 package model
 
 type VmInformation struct {
+	Common
+
 	Id     string `json:"id"`
 	Cpu    *Vmcpu `json:"cpu,omitempty"`
 	Memory int    `json:"memory,omitempty"`

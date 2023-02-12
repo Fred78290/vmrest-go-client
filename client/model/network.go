@@ -11,6 +11,8 @@ package model
 
 // The virtual network
 type Network struct {
+	Common
+
 	// Name of virtual network
 	Name   string `json:"name"`
 	Type   string `json:"type"`

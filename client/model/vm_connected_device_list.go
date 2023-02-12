@@ -10,6 +10,8 @@
 package model
 
 type VmConnectedDeviceList struct {
+	Common
+
 	Num     int                 `json:"num,omitempty"`
 	Devices []VmConnectedDevice `json:"devices,omitempty"`
 }

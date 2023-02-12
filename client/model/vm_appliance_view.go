@@ -10,6 +10,8 @@
 package model
 
 type VmApplianceView struct {
+	Common
+
 	Author        string `json:"author,omitempty"`
 	Version       string `json:"version,omitempty"`
 	Port          int    `json:"port,omitempty"`

@@ -11,6 +11,8 @@ package model
 
 // Routing entry
 type RouteEntry struct {
+	Common
+
 	Dest      string `json:"dest"`
 	Prefix    int    `json:"prefix"`
 	Nexthop   string `json:"nexthop,omitempty"`

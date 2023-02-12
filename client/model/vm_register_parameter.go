@@ -10,6 +10,8 @@
 package model
 
 type VmRegisterParameter struct {
+	Common
+
 	// Register VM name
 	Name string `json:"name,omitempty"`
 	// Register VM path

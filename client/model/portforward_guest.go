@@ -10,6 +10,8 @@
 package model
 
 type PortforwardGuest struct {
+	Common
+
 	Ip   string `json:"ip"`
 	Port int    `json:"port"`
 }
