@@ -55,7 +55,7 @@ NewHttpClient Changes the VM power state
 func NewHttpClient(endpoint, userAgent, userName, password string, timeout time.Duration, unsecureTLS bool) (api.Client, error) {
 
 	if len(endpoint) == 0 {
-		endpoint = "https://127.0.0.1:8697"
+		endpoint = "http://127.0.0.1:8697"
 	}
 
 	client := clientWrapper{
