@@ -169,7 +169,7 @@ func (c *clientWrapper) NewRequest(method, path string, reqBody interface{}, nee
 	req.Header.Set("User-Agent", c.APIUserAgent)
 
 	// Send the request with requested timeout
-	c.Client.Timeout = c.Timeout
+	c.Client.Timeout = c.Timeout * time.Second
 
 	return req, nil
 }
