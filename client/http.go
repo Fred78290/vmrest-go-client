@@ -19,6 +19,8 @@ import (
 	"github.com/Fred78290/vmrest-go-client/client/model"
 )
 
+const VMREST_CONTENT_TYPE = "application/vnd.vmware.vmw.rest-v1+json"
+
 // Logger is the interface that should be implemented for loggers that wish to
 // log HTTP requests and HTTP responses.
 type Logger interface {
@@ -156,15 +158,15 @@ func (c *clientWrapper) NewRequest(method, path string, reqBody interface{}, nee
 
 	// Inject headers
 	if body != nil {
-		req.Header.Set("Content-Type", "application/vnd.vmware.vmw.rest-v1+json")
+		req.Header.Set("Content-Type", VMREST_CONTENT_TYPE)
 	}
 
 	if len(c.APIUserName) > 0 && len(c.APIPassword) > 0 {
 		req.SetBasicAuth(c.APIUserName, c.APIPassword)
 	}
 
-	req.Header.Set("Accept", "application/vnd.vmware.vmw.rest-v1+json")
-	req.Header.Set("User-Agent", "Swagger-Codegen/1.0.0/go")
+	req.Header.Set("Accept", VMREST_CONTENT_TYPE)
+	req.Header.Set("User-Agent", c.APIUserAgent)
 
 	// Send the request with requested timeout
 	c.Client.Timeout = c.Timeout
