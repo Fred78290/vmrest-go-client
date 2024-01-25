@@ -278,22 +278,26 @@ func (c *clientWrapper) UnmarshalResponse(response *http.Response, resType inter
 }
 
 func (c *clientWrapper) decode(v interface{}, b []byte, contentType string) (err error) {
-	if strings.Contains(contentType, "xml") {
-		if err = xml.Unmarshal(b, v); err != nil {
-			return err
+	if len(b) > 0 {
+		if strings.Contains(contentType, "xml") {
+			if err = xml.Unmarshal(b, v); err != nil {
+				return err
+			}
+
+			return nil
+
+		} else if strings.Contains(contentType, "json") {
+			if err = json.Unmarshal(b, v); err != nil {
+				return err
+			}
+
+			return nil
 		}
 
-		return nil
-
-	} else if strings.Contains(contentType, "json") {
-		if err = json.Unmarshal(b, v); err != nil {
-			return err
-		}
-
-		return nil
+		return errors.New("undefined response type")
 	}
 
-	return errors.New("undefined response type")
+	return nil
 }
 
 func (c *clientWrapper) validate() error {
