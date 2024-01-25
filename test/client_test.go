@@ -287,7 +287,7 @@ func TestAPIClient_ConfigVMParams(t *testing.T) {
 		Value: "Sample VM",
 	}
 
-	mock.On("Put", fmt.Sprintf("/api/vms/%s/configparams", vmid), parameters).Return(expected, nil).Once()
+	mock.On("Put", fmt.Sprintf("/api/vms/%s/params", vmid), parameters).Return(expected, nil).Once()
 
 	result, err := vmrest.ConfigVMParams(vmid, parameters)
 
