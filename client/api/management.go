@@ -22,6 +22,10 @@ import (
 	"github.com/Fred78290/vmrest-go-client/client/model"
 )
 
+const (
+	kApiVM = "/api/vms/%s"
+)
+
 type managementApiService struct {
 	client Client
 }
@@ -41,7 +45,7 @@ func NewManagementApiService(client Client) ManagementApiService {
 func (a *managementApiService) ConfigVMParams(id string, parameters *model.ConfigVmParamsParameter) (*model.ErrorModel, error) {
 	var returnValue model.ErrorModel
 
-	if err := a.client.Put(fmt.Sprintf("/api/vms/%s/configparams", id), parameters, &returnValue); err != nil {
+	if err := a.client.Put(fmt.Sprintf("/api/vms/%s/params", id), parameters, &returnValue); err != nil {
 		return nil, err
 	} else {
 		return &returnValue, err
@@ -65,7 +69,7 @@ func (a *managementApiService) CreateVM(parameters *model.VmCloneParameter) (*mo
 // DeleteVM Deletes a VM
 //   - @param id ID of VM
 func (a *managementApiService) DeleteVM(id string) error {
-	return a.client.Delete(fmt.Sprintf("/api/vms/%s", id), nil)
+	return a.client.Delete(fmt.Sprintf(kApiVM, id), nil)
 }
 
 // GetAllVMs Returns a list of VM IDs and paths for all VMs
@@ -87,7 +91,7 @@ func (a *managementApiService) GetAllVMs() ([]model.Vmid, error) {
 func (a *managementApiService) GetVM(id string) (*model.VmInformation, error) {
 	var returnValue model.VmInformation
 
-	if err := a.client.Get(fmt.Sprintf("/api/vms/%s", id), &returnValue); err != nil {
+	if err := a.client.Get(fmt.Sprintf(kApiVM, id), &returnValue); err != nil {
 		return nil, err
 	} else {
 		return &returnValue, err
@@ -146,7 +150,7 @@ func (a *managementApiService) UpdateVM(id string, parameters *model.VmParameter
 	var returnValue model.VmInformation
 
 	// body params
-	if err := a.client.Put(fmt.Sprintf("/api/vms/%s", id), parameters, &returnValue); err != nil {
+	if err := a.client.Put(fmt.Sprintf(kApiVM, id), parameters, &returnValue); err != nil {
 		return nil, err
 	} else {
 		return &returnValue, err
