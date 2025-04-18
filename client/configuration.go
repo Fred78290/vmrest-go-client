@@ -67,7 +67,7 @@ type Configuration struct {
 
 func NewConfiguration(username, password string, port int) *Configuration {
 	cfg := &Configuration{
-		Endpoint:  fmt.Sprintf("http://localhost:%d/", port),
+		Endpoint:  fmt.Sprintf("http://localhost:%d", port),
 		UserAgent: "Swagger-Codegen/1.0.0/go",
 		UserName:  username,
 		Password:  password,
